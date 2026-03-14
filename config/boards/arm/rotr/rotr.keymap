@@ -4,39 +4,58 @@
 #include <dt-bindings/zmk/bt.h>
 
 &inc_dec_kp {
-	triggers-per-rotation = <8>;
+    triggers-per-rotation = <8>;
 };
 &def_lshft {
-	triggers-per-rotation = <8>;
+    triggers-per-rotation = <8>;
 };
 
 / {
-	keymap {
-		compatible = "zmk,keymap";
+    keymap {
+        compatible = "zmk,keymap";
 
-		default_layer {
-			//PREV | PLAY/PAUSE | NEXT
-			bindings = <&kp C_MUTE &lt 4 F13 &kp C_PP>;
-			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-		};
-		one {
-			//PREV | PLAY/PAUSE | NEXT
-			bindings = <&kp C_PREV &lt 4 C_PP &kp C_NEXT>;
-			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-		};
-		two {
-			//PREV | PLAY/PAUSE | NEXT
-			bindings = <&kp LEFT &lt 4 SPACE &kp RIGHT>;
-			sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
-		};
-		three {
-			//PREV | PLAY/PAUSE | NEXT
-			bindings = <&kp C_MUTE &lt 4 F13 &kp C_PP>;
-		};
-		shift {
-			//PREV | PLAY/PAUSE | NEXT
-			bindings = <&bt BT_CLR &trans &rgb_ug RGB_TOG>;
-			sensor-bindings = <&def_lshft>;
-		};
-	};
+        default_layer {
+            // DEFAULT COLOR: Red (layer 0 default, no ledoverride)
+            // Buttons: MUTE | LAYER-TAP(shift)/F13 | PLAY/PAUSE
+            // Knob:    Volume Up / Volume Down
+            bindings = <&kp C_MUTE &lt 4 F13 &kp C_PP>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+        one {
+            // COLOR: Magenta (ledoverride: R:255 G:0 B:255)
+            // Buttons: PREV TRACK | LAYER-TAP(shift)/PLAY-PAUSE | NEXT TRACK
+            // Knob:    Volume Up / Volume Down
+            bindings = <&kp C_PREV &lt 4 C_PP &kp C_NEXT>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+            ledoverride;
+            r = <255>;
+            g = <0>;
+            b = <255>;
+        };
+        two {
+            // DEFAULT COLOR: Blue (layer 2 default, no ledoverride)
+            // Buttons: LEFT ARROW | LAYER-TAP(shift)/SPACE | RIGHT ARROW
+            // Knob:    Zoom In (Ctrl+=) / Zoom Out (Ctrl+-)
+            //          Works in browsers, VS Code, Office, Explorer
+            bindings = <&kp LEFT &lt 4 SPACE &kp RIGHT>;
+            sensor-bindings = <&inc_dec_kp LC(EQUAL) LC(MINUS)>;
+        };
+        three {
+            // DEFAULT COLOR: Yellow (layer 3 default, no ledoverride)
+            // Buttons: MUTE | LAYER-TAP(shift)/F13 | PLAY/PAUSE
+            // Knob:    App Switch Forward (Alt+Tab) / App Switch Back (Alt+Shift+Tab)
+            bindings = <&kp C_MUTE &lt 4 F13 &kp C_PP>;
+            sensor-bindings = <&inc_dec_kp LA(TAB) LA(LS(TAB))>;
+        };
+        shift {
+            // DEFAULT COLOR: Cyan/Teal (layer 4 default, no ledoverride)
+            // This is the HOLD layer — active while middle button is held
+            // Buttons: BT CLEAR | (pass-through) | CYCLE RGB EFFECT
+            // Knob:    Change Layer (built-in def_lshft behavior)
+            // NOTE: label = "shift" enables lights-off-when-not-in-shift-layer feature
+            label = "shift";
+            bindings = <&bt BT_CLR &trans &rgb_ug RGB_EFF>;
+            sensor-bindings = <&def_lshft>;
+        };
+    };
 };
