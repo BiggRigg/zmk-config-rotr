@@ -33,3 +33,16 @@ CONFIG_ZMK_RGB_UNDERGLOW_AUTO_OFF_IDLE=y
 CONFIG_BT_CTLR_TX_PWR_PLUS_8=y
 CONFIG_BUILD_OUTPUT_UF2=y
 CONFIG_ZMK_RGB_UNDERGLOW_EXT_POWER=y
+
+# Set breathe as the default RGB effect on startup
+# (0=solid, 1=breathe, 2=spectrum, 3=swirl, 4=layer-color)
+CONFIG_ZMK_RGB_UNDERGLOW_EFF=1
+
+# Turn off RGB when keyboard is idle on battery
+CONFIG_ZMK_RGB_UNDERGLOW_AUTO_OFF_IDLE=y
+
+# Keep lights ON when USB is connected (overrides the idle timeout above)
+CONFIG_ZMK_RGB_UNDERGLOW_AUTO_OFF_USB=n
+
+# Idle timeout in milliseconds - only applies when on battery (60 seconds)
+CONFIG_ZMK_IDLE_TIMEOUT=60000
