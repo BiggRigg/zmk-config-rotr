@@ -2,11 +2,11 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: refil
-      url-base: https://github.com/refil
+    - name: BiggRigg
+      url-base: https://github.com/BiggRigg
   projects:
     - name: zmk
-      remote: refil
+      remote: BiggRigg
       revision: rotrlayer
       import: app/west.yml
   self:
