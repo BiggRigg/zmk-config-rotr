@@ -17,6 +17,7 @@
             compatible = "zmk,behavior-sensor-rotate-key-press";
             label = "ENC_KEY_PRESS_SLOW";
             triggers-per-rotation = <4>;
+            #sensor-binding-cells = <2>;
         };
     };
 
