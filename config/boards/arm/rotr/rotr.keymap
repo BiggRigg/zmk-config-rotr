@@ -11,6 +11,16 @@
 };
 
 / {
+    behaviors {
+        // Slow encoder for app switching - 2 triggers per rotation
+        inc_dec_kp_slow: behavior_sensor_rotate_key_press_slow {
+            compatible = "zmk,behavior-sensor-rotate-key-press";
+            label = "ENC_KEY_PRESS_SLOW";
+            triggers-per-rotation = <4>;
+            #sensor-binding-cells = <4>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -36,25 +46,24 @@
             // DEFAULT COLOR: Blue (layer 2 default, no ledoverride)
             // Buttons: LEFT ARROW | LAYER-TAP(shift)/SPACE | RIGHT ARROW
             // Knob:    Zoom In (Ctrl+=) / Zoom Out (Ctrl+-)
-            //          Works in browsers, VS Code, Office, Explorer
             bindings = <&kp LEFT &lt 4 SPACE &kp RIGHT>;
             sensor-bindings = <&inc_dec_kp LC(EQUAL) LC(MINUS)>;
         };
         three {
             // DEFAULT COLOR: Yellow (layer 3 default, no ledoverride)
-            // Buttons: MUTE | LAYER-TAP(shift)/F13 | PLAY/PAUSE
-            // Knob:    App Switch Forward (Alt+Tab) / App Switch Back (Alt+Shift+Tab)
-            bindings = <&kp C_MUTE &lt 4 F13 &kp C_PP>;
-            sensor-bindings = <&inc_dec_kp LA(TAB) LA(LS(TAB))>;
+            // Buttons: HOLD ALT (for app switching) | LAYER-TAP(shift)/F13 | PLAY/PAUSE
+            // Knob:    Tab / Shift+Tab  (Alt held by left button = Alt+Tab / Alt+Shift+Tab)
+            // Usage:   Hold left button to keep Alt held, spin to select window, release to confirm
+            bindings = <&kp LALT &lt 4 F13 &kp C_PP>;
+            sensor-bindings = <&inc_dec_kp_slow TAB LS(TAB)>;
         };
         shift {
             // DEFAULT COLOR: Cyan/Teal (layer 4 default, no ledoverride)
-            // This is the HOLD layer — active while middle button is held
-            // Buttons: BT CLEAR | (pass-through) | CYCLE RGB EFFECT
-            // Knob:    Change Layer (built-in def_lshft behavior)
-            // NOTE: label = "shift" enables lights-off-when-not-in-shift-layer feature
+            // This is the HOLD layer - active while middle button is held
+            // Buttons: BT CLEAR | (pass-through) | RGB TOGGLE
+            // Knob:    Change Layer
             label = "shift";
-            bindings = <&bt BT_CLR &trans &rgb_ug RGB_EFF>;
+            bindings = <&bt BT_CLR &trans &rgb_ug RGB_TOG>;
             sensor-bindings = <&def_lshft>;
         };
     };
