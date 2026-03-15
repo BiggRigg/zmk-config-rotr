@@ -16,7 +16,7 @@
         inc_dec_kp_slow: behavior_sensor_rotate_key_press_slow {
             compatible = "zmk,behavior-sensor-rotate-key-press";
             label = "ENC_KEY_PRESS_SLOW";
-            triggers-per-rotation = <4>;
+            triggers-per-rotation = <8>;
             #sensor-binding-cells = <2>;
         };
     };
@@ -56,6 +56,10 @@
             // Usage:   Hold left button to keep Alt held, spin to select window, release to confirm
             bindings = <&kp LALT &lt 4 F13 &kp C_PP>;
             sensor-bindings = <&inc_dec_kp_slow TAB LS(TAB)>;
+            ledoverride;
+            r = <128>;
+            g = <255>;
+            b = <0>;
         };
         shift {
             // DEFAULT COLOR: Cyan/Teal (layer 4 default, no ledoverride)
